@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beranda - Sihombing Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e4fef, #21dde4);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #206dea;
+            transform: translateY(-2px);
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('Img/klinik.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #0865e7;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #31a5f8;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #1a4bea;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #0f0f10;
+        }
+
+        .doctors {
+            margin-top: 50px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2435f5;
+            font-size: 2rem;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .doctor-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-img {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .doctor-info {
+            padding: 20px;
+        }
+
+        .doctor-info h3 {
+            color: #1d1e1c;
+            margin-bottom: 5px;
+        }
+
+        .doctor-info p {
+            color: #0e69ea;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #3784f0;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #3880ec;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #3be9f2;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .hero {
+                padding: 60px 20px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+          
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="login.html" id="login-link-nav"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a>
+            <a href="pasien.html" id="area-pasien-link" style="display: none;"><i class="fas fa-user-injured"></i> Area Pasien</a>
+            <a href="#" id="logout-link-nav" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Kesehatan Anda Adalah Prioritas Kami</h2>
+            <p>Memberikan pelayanan kesehatan terbaik dengan dokter berpengalaman dan fasilitas modern untuk kenyamanan Anda.</p>
+            <a href="register.html" class="btn">Daftar Sekarang</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h3>Dokter Profesional</h3>
+                <p>Tim dokter kami yang berpengalaman dan bersertifikat siap memberikan pelayanan terbaik untuk kesehatan Anda.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Layanan 24 Jam</h3>
+                <p>Kami buka 24 jam untuk melayani kebutuhan kesehatan darurat Anda kapan saja.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-procedures"></i>
+                </div>
+                <h3>Fasilitas Modern</h3>
+                <p>Dilengkapi dengan peralatan medis terkini untuk diagnosis dan pengobatan yang akurat.</p>
+            </div>
+        </section>
+
+        <section class="doctors">
+            <h2 class="section-title">Dokter Kami</h2>
+            <div class="doctor-grid">
+                <div class="doctor-card">
+                    <div class="doctor-img" style="background-image: url('Img/elma.jpg');"></div>
+                    <div class="doctor-info">
+                        <h3>dr. Elma Sihombing, Sp.PD</h3>
+                        <p>Spesialis Penyakit Dalam</p>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-img" style="background-image: url('Img/reva.jpg');"></div>
+                    <div class="doctor-info">
+                        <h3>dr. Reva Mariani BR r Sinaga, Sp.A</h3>
+                        <p>Spesialis Anak</p>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-img" style="background-image: url('Img/deby.jpg');"></div>
+                    <div class="doctor-info">
+                        <h3>dr. Deby Irmawati Sitompul
+                        <p>Spesialis Mata</p>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-img" style="background-image: url('Img/chelsea.jpg');"></div>
+                    <div class="doctor-info">
+                        <h3>dr. Chelsea Sihombing, Sp.OG</h3>
+                        <p>Spesialis Kandungan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Be randa</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk mengecek status login dan menyesuaikan navigasi
+            function checkLoginStatus() {
+                const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                const loginLink = document.getElementById('login-link-nav');
+                const logoutLink = document.getElementById('logout-link-nav');
+                const areaPasienLink = document.getElementById('area-pasien-link');
+
+                if (loggedUser) {
+                    loginLink.style.display = 'none';
+                    logoutLink.style.display = 'flex';
+                    
+                    // Tampilkan area pasien hanya jika user adalah pasien
+                    if (loggedUser.role === 'pasien') {
+                        areaPasienLink.style.display = 'flex';
+                    } else {
+                        areaPasienLink.style.display = 'none';
+                    }
+                } else {
+                    loginLink.style.display = 'flex';
+                    logoutLink.style.display = 'none';
+                    areaPasienLink.style.display = 'none';
+                }
+            }
+
+            // Panggil fungsi saat halaman dimuat
+            checkLoginStatus();
+
+            // Tambahkan event listener untuk logout
+            const logoutLink = document.getElementById('logout-link-nav');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

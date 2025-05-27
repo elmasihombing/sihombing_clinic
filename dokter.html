@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Dokter - Sihombing Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        /* Global Styles - Consistent with other pages */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2b65ec, #06a2e4);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #3543fc;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .doctor-dashboard {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .doctor-dashboard h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #3452fd;
+            font-size: 2rem;
+        }
+
+        .doctor-dashboard #welcome-message {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .consultation-list-section {
+            margin-top: 30px;
+        }
+
+        .consultation-list-section h3 {
+            color: #004d40;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .consultation-table-container {
+            overflow-x: auto; /* Enable horizontal scrolling on small screens */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        .consultation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+        }
+
+        .consultation-table th,
+        .consultation-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        .consultation-table thead th {
+            background-color: #0b75ef;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .consultation-table tbody tr:nth-child(even) {
+            background-color: #f2fbfb;
+        }
+
+        .consultation-table tbody tr:hover {
+            background-color: #e0f2f1;
+            cursor: default; /* Changed from pointer to default for table rows as action is on button */
+        }
+        
+        .consultation-table td select,
+        .consultation-table td textarea {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background-color: white;
+            width: 100%;
+            max-width: 250px; /* Limit width of textarea */
+            display: none; /* Hide these from direct table, handled by modal now */
+        }
+
+        .consultation-table td button.fill-mr-button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .consultation-table td button.fill-mr-button:hover {
+            background-color: #0056b3;
+        }
+
+        .consultation-table td button.fill-mr-button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .consultation-table .status-success {
+            color: #0c59f3;
+            font-weight: 600;
+        }
+
+        .consultation-table .status-warning {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .consultation-table .status-danger {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        #empty-consultation-message {
+            text-align: center;
+            color: #777;
+            margin-top: 20px;
+            font-style: italic;
+            padding: 20px;
+            background-color: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 8px;
+            display: none; /* Hidden by default, shown by JS if no data */
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #086fe4;
+        }
+
+        .modal-content .form-group {
+            margin-bottom: 15px;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content textarea,
+        .modal-content select {
+            width: calc(100% - 20px); /* Adjust width for padding */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            resize: vertical; /* Allow vertical resizing for textarea */
+        }
+
+        .modal-content textarea[readonly],
+        .modal-content input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        .modal-content button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .modal-content button[type="submit"]:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        /* Adjustments for the table cells to fit the new button */
+        .consultation-table td:last-child {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+
+        .consultation-table td button {
+            margin: 0; /* Reset margin */
+        }
+
+
+        /* Footer Styles - Consistent with other pages */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #1470fa;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #375af3;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #198af3;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design - Consistent with other pages */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+          
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="resepsionis.html" id="area-resepsionis-link" style="display: none;"><i class="fas fa-clipboard-user"></i> Area Resepsionis</a>
+            <a href="dokter.html" id="area-dokter-link" style="display: none;"><i class="fas fa-user-md"></i> Area Dokter</a>
+            <a href="login.html" id="login-link-nav"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="#" id="logout-link-nav" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <section class="doctor-dashboard">
+            <h2>Dashboard Dokter</h2>
+            <p id="welcome-message">Selamat Datang, Dokter!</p>
+
+            <div class="consultation-list-section">
+                <h3><i class="fas fa-calendar-check"></i> Konsultasi yang Dijadwalkan</h3>
+                <div class="consultation-table-container">
+                    <table class="consultation-table" id="consultation-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Pasien</th>
+                                <th>Keluhan</th>
+                                <th>Status Pembayaran</th>
+                                <th>Status Konsultasi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultation-table-body">
+                            </tbody>
+                    </table>
+                </div>
+                <p id="empty-consultation-message">Tidak ada konsultasi yang dijadwalkan untuk Anda.</p>
+            </div>
+        </section>
+    </div>
+
+    <div id="medicalRecordModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Isi Rekam Medis</h2>
+            <form id="medicalRecordForm">
+                <input type="hidden" id="modalConsultationId">
+
+                <div class="form-group">
+                    <label for="modalPatientName">Nama Pasien:</label>
+                    <input type="text" id="modalPatientName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalConsultationDate">Tanggal Konsultasi:</label>
+                    <input type="text" id="modalConsultationDate" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalComplaint">Keluhan Pasien:</label>
+                    <textarea id="modalComplaint" rows="3" readonly></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalDiagnosis">Penyakit (Diagnosa):</label>
+                    <input type="text" id="modalDiagnosis" placeholder="Masukkan diagnosa penyakit" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalMedication">Obat/Tindakan:</label>
+                    <textarea id="modalMedication" rows="5" placeholder="Masukkan detail obat atau tindakan yang diberikan" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modalConsultationStatus">Status Konsultasi:</label>
+                    <select id="modalConsultationStatus" required>
+                        <option value="Dijadwalkan">Dijadwalkan</option>
+                        <option value="Selesai">Selesai</option>
+                        <option value="Dibatalkan">Dibatalkan</option>
+                    </select>
+                </div>
+
+                <button type="submit">Simpan Rekam Medis</button>
+                <p id="modal-form-message" class="form-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="login.html" id="footer-login-link">Login</a></li>
+                <li><a href="register.html" id="footer-register-link" style="display: none;">Daftar</a></li>
+                <li><a href="resepsionis.html" id="footer-area-resepsionis-link" style="display: none;">Area Resepsionis</a></li>
+                <li><a href="dokter.html" id="footer-area-dokter-link" style="display: none;">Area Dokter</a></li>
+                <li><a href="#" id="footer-logout-link" style="display: none;">Logout</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof(Storage) === "undefined") {
+                alert('Browser Anda tidak mendukung fitur penyimpanan lokal. Beberapa fitur mungkin tidak berfungsi.');
+                return;
+            }
+
+            // --- Navigasi dan Otentikasi ---
+            const loginLinkNav = document.getElementById('login-link-nav');
+            const logoutLinkNav = document.getElementById('logout-link-nav');
+            const areaResepsionisLinkNav = document.getElementById('area-resepsionis-link');
+            const areaDokterLinkNav = document.getElementById('area-dokter-link');
+            // Footer links
+            const footerLoginLink = document.getElementById('footer-login-link');
+            const footerRegisterLink = document.getElementById('footer-register-link');
+            const footerAreaResepsionisLink = document.getElementById('footer-area-resepsionis-link');
+            const footerAreaDokterLink = document.getElementById('footer-area-dokter-link');
+            const footerLogoutLink = document.getElementById('footer-logout-link');
+
+            let loggedUser;
+            try {
+                loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                if (!loggedUser || loggedUser.role !== 'dokter') {
+                    alert('Anda harus login sebagai dokter untuk mengakses halaman ini.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+            } catch (e) {
+                console.error("Error parsing user data:", e);
+                alert('Terjadi kesalahan saat memuat data pengguna.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const welcomeMessage = document.getElementById('welcome-message');
+            welcomeMessage.textContent = `Selamat Datang, ${loggedUser.nama}!`;
+
+            function updateNavLinks() {
+                if (loggedUser) {
+                    if (loginLinkNav) loginLinkNav.style.display = 'none';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'flex';
+                    if (footerLoginLink) footerLoginLink.style.display = 'none';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'list-item';
+
+                    const registerLinkNav = document.querySelector('a[href="register.html"]');
+                    if (registerLinkNav) registerLinkNav.style.display = 'none';
+                    if (footerRegisterLink) footerRegisterLink.style.display = 'none';
+                    
+                    if (areaResepsionisLinkNav) {
+                        if (loggedUser.role === 'resepsionis') {
+                            areaResepsionisLinkNav.style.display = 'flex';
+                            if (footerAreaResepsionisLink) footerAreaResepsionisLink.style.display = 'list-item';
+                        } else {
+                            areaResepsionisLinkNav.style.display = 'none';
+                            if (footerAreaResepsionisLink) footerAreaResepsionisLink.style.display = 'none';
+                        }
+                    }
+                    if (areaDokterLinkNav) {
+                        if (loggedUser.role === 'dokter') {
+                            areaDokterLinkNav.style.display = 'flex';
+                            if (footerAreaDokterLink) footerAreaDokterLink.style.display = 'list-item';
+                        } else {
+                            areaDokterLinkNav.style.display = 'none';
+                            if (footerAreaDokterLink) footerAreaDokterLink.style.display = 'none';
+                        }
+                    }
+                } else {
+                    if (loginLinkNav) loginLinkNav.style.display = 'flex';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'none';
+                    if (areaResepsionisLinkNav) areaResepsionisLinkNav.style.display = 'none';
+                    if (areaDokterLinkNav) areaDokterLinkNav.style.display = 'none';
+                    if (footerLoginLink) footerLoginLink.style.display = 'list-item';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'none';
+                    if (footerAreaResepsionisLink) footerAreaResepsionisLink.style.display = 'none';
+                    if (footerAreaDokterLink) footerAreaDokterLink.style.display = 'none';
+                }
+            }
+            updateNavLinks();
+
+            if (logoutLinkNav) {
+                logoutLinkNav.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+            if (footerLogoutLink) {
+                footerLogoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // --- Fungsionalitas Dokter ---
+            const consultationTableBody = document.getElementById('consultation-table-body');
+            const emptyConsultationMessage = document.getElementById('empty-consultation-message');
+
+            // Modal elements
+            const medicalRecordModal = document.getElementById('medicalRecordModal');
+            const closeButton = document.querySelector('.close-button');
+            const medicalRecordForm = document.getElementById('medicalRecordForm');
+            const modalConsultationId = document.getElementById('modalConsultationId');
+            const modalPatientName = document.getElementById('modalPatientName');
+            const modalConsultationDate = document.getElementById('modalConsultationDate');
+            const modalComplaint = document.getElementById('modalComplaint');
+            const modalDiagnosis = document.getElementById('modalDiagnosis');
+            const modalMedication = document.getElementById('modalMedication');
+            const modalConsultationStatus = document.getElementById('modalConsultationStatus');
+            const modalFormMessage = document.getElementById('modal-form-message');
+
+            function getAllConsultations() {
+                try {
+                    return JSON.parse(localStorage.getItem('consultationHistory')) || [];
+                } catch (e) {
+                    console.error("Error loading consultation history:", e);
+                    return [];
+                }
+            }
+
+            function saveAllConsultations(consultations) {
+                try {
+                    localStorage.setItem('consultationHistory', JSON.stringify(consultations));
+                } catch (e) {
+                    console.error("Error saving consultation history:", e);
+                    alert('Gagal menyimpan perubahan data konsultasi.');
+                }
+            }
+
+            function renderConsultationsForDoctor() {
+                const allConsultations = getAllConsultations();
+                // Filter consultations relevant to the logged-in doctor
+                // Include 'Menunggu Konfirmasi Dokter' if you want doctors to see pending ones too
+                const doctorConsultations = allConsultations.filter(item => 
+                    item.doctorUsername === loggedUser.username && 
+                    (item.consultationStatus === 'Dijadwalkan' || 
+                     item.consultationStatus === 'Selesai' || 
+                     item.consultationStatus === 'Menunggu Konfirmasi Dokter') // Added for comprehensive view
+                );
+
+                consultationTableBody.innerHTML = '';
+
+                if (doctorConsultations.length === 0) {
+                    emptyConsultationMessage.style.display = 'block';
+                    document.getElementById('consultation-table').style.display = 'none';
+                    return;
+                }
+
+                emptyConsultationMessage.style.display = 'none';
+                document.getElementById('consultation-table').style.display = 'table';
+
+                // Sort by date (newest first)
+                doctorConsultations.sort((a, b) => {
+                    const dateA = new Date(a.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                });
+
+                doctorConsultations.forEach(item => {
+                    const row = consultationTableBody.insertRow();
+                    row.dataset.consultationId = item.id;
+
+                    row.insertCell().textContent = item.id;
+                    row.insertCell().textContent = item.date;
+                    row.insertCell().textContent = item.patientName;
+                    
+                    const complaintCell = row.insertCell();
+                    const shortenedComplaint = item.complaint.length > 50 
+                        ? item.complaint.substring(0, 50) + '...' 
+                        : item.complaint;
+                    complaintCell.textContent = shortenedComplaint;
+                    complaintCell.title = item.complaint; // Show full text on hover
+
+                    const paymentStatusCell = row.insertCell();
+                    paymentStatusCell.textContent = item.paymentStatus;
+                    paymentStatusCell.className = `status-${item.paymentStatus === 'Berhasil' ? 'success' : (item.paymentStatus === 'Gagal' ? 'danger' : 'warning')}`;
+
+                    const consultationStatusCell = row.insertCell();
+                    consultationStatusCell.textContent = item.consultationStatus;
+                    consultationStatusCell.className = `status-${item.consultationStatus === 'Selesai' ? 'success' : (item.consultationStatus === 'Dibatalkan' ? 'danger' : 'warning')}`;
+
+                    // Action Cell with new "Isi Rekam Medis" button
+                    const actionCell = row.insertCell();
+                    const fillMedicalRecordButton = document.createElement('button');
+                    fillMedicalRecordButton.textContent = 'Isi Rekam Medis';
+                    fillMedicalRecordButton.classList.add('fill-mr-button');
+
+                    // Disable button if consultation is already 'Selesai'
+                    if (item.consultationStatus === 'Selesai') {
+                        fillMedicalRecordButton.disabled = true;
+                        fillMedicalRecordButton.textContent = 'Selesai';
+                        fillMedicalRecordButton.style.backgroundColor = '#6c757d'; // Gray out
+                        fillMedicalRecordButton.style.cursor = 'not-allowed';
+                    }
+
+                    fillMedicalRecordButton.addEventListener('click', function() {
+                        openMedicalRecordModal(item);
+                    });
+                    actionCell.appendChild(fillMedicalRecordButton);
+                });
+            }
+
+            // --- Modal Functionality ---
+            function openMedicalRecordModal(consultationItem) {
+                modalConsultationId.value = consultationItem.id;
+                modalPatientName.value = consultationItem.patientName;
+                modalConsultationDate.value = consultationItem.date;
+                modalComplaint.value = consultationItem.complaint;
+                
+                // Load existing medical record data if available
+                modalDiagnosis.value = consultationItem.medicalRecord ? (consultationItem.medicalRecord.diagnosis || '') : '';
+                modalMedication.value = consultationItem.medicalRecord ? (consultationItem.medicalRecord.medication || '') : '';
+                
+                // Set consultation status dropdown based on current status
+                modalConsultationStatus.value = consultationItem.consultationStatus;
+
+                // Adjust button and fields if already completed
+                const submitButton = medicalRecordForm.querySelector('button[type="submit"]');
+                if (consultationItem.consultationStatus === 'Selesai') {
+                    modalDiagnosis.readOnly = true;
+                    modalMedication.readOnly = true;
+                    modalConsultationStatus.disabled = true;
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Sudah Selesai';
+                    submitButton.style.backgroundColor = '#6c757d';
+                    submitButton.style.cursor = 'not-allowed';
+                } else {
+                    modalDiagnosis.readOnly = false;
+                    modalMedication.readOnly = false;
+                    modalConsultationStatus.disabled = false;
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Simpan Rekam Medis';
+                    submitButton.style.backgroundColor = '#007bff';
+                    submitButton.style.cursor = 'pointer';
+                }
+
+                modalFormMessage.textContent = ''; // Clear previous messages
+                medicalRecordModal.style.display = 'flex'; // Show the modal
+            }
+
+            closeButton.addEventListener('click', function() {
+                medicalRecordModal.style.display = 'none';
+            });
+
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                if (event.target === medicalRecordModal) {
+                    medicalRecordModal.style.display = 'none';
+                }
+            });
+
+            medicalRecordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                modalFormMessage.textContent = ''; // Clear previous messages
+
+                const id = parseInt(modalConsultationId.value);
+                const diagnosis = modalDiagnosis.value.trim();
+                const medication = modalMedication.value.trim();
+                const newConsultationStatus = modalConsultationStatus.value;
+
+                if (!diagnosis || !medication) {
+                    modalFormMessage.textContent = 'Diagnosa dan Obat/Tindakan harus diisi.';
+                    modalFormMessage.classList.add('error');
+                    return;
+                }
+
+                if (diagnosis.length < 5 || medication.length < 5) {
+                    modalFormMessage.textContent = 'Diagnosa dan Obat/Tindakan minimal 5 karakter.';
+                    modalFormMessage.classList.add('error');
+                    return;
+                }
+
+                let allConsultations = getAllConsultations();
+                const index = allConsultations.findIndex(item => item.id === id);
+
+                if (index !== -1) {
+                    allConsultations[index].medicalRecord = {
+                        diagnosis: diagnosis,
+                        medication: medication,
+                        // You might add date/time of medical record entry here if needed
+                    };
+                    allConsultations[index].consultationStatus = newConsultationStatus;
+
+                    // If consultation is marked as 'Selesai', set payment status to 'Berhasil' automatically
+                    if (newConsultationStatus === 'Selesai') {
+                        allConsultations[index].paymentStatus = 'Berhasil';
+                    }
+
+                    saveAllConsultations(allConsultations);
+                    renderConsultationsForDoctor(); // Re-render table
+                    medicalRecordModal.style.display = 'none'; // Close modal
+
+                    modalFormMessage.textContent = 'Rekam medis berhasil disimpan dan status konsultasi diperbarui!';
+                    modalFormMessage.classList.remove('error');
+                    modalFormMessage.classList.add('success');
+
+                    // Simulate sending notification to patient (for finished consultations)
+                    if (newConsultationStatus === 'Selesai') {
+                        alert(`Notifikasi Pasien: Rekam medis untuk konsultasi Anda dengan Dr. ${loggedUser.nama} telah tersedia. Anda dapat melihatnya di riwayat konsultasi Anda.`);
+                    }
+                } else {
+                    modalFormMessage.textContent = 'Terjadi kesalahan: Konsultasi tidak ditemukan.';
+                    modalFormMessage.classList.add('error');
+                }
+            });
+
+            renderConsultationsForDoctor(); // Initial render when page loads
+        });
+    </script>
+</body>
+</html>

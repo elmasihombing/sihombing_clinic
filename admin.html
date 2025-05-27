@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin - Sihombing Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        /* Menggunakan kembali CSS dari file login.html untuk konsistensi */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        header {
+            background: linear-gradient(135deg, #26a69a, #2ecc71);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #26a69a;
+            transform: translateY(-2px);
+        }
+
+        /* --- CSS Khusus untuk Halaman Admin --- */
+        .admin-dashboard {
+            flex-grow: 1;
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px 20px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #e0f2f1;
+            border-radius: 10px;
+            color: #004d40;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.2rem;
+            color: #00796b;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .dashboard-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .data-section {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .data-section h3 {
+            font-size: 1.8rem;
+            color: #009688;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0f2f1;
+            padding-bottom: 10px;
+        }
+
+        .data-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-section th,
+        .data-section td {
+            border: 1px solid #e0f2f1;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .data-section th {
+            background-color: #f2f7f7;
+            color: #004d40;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .data-section tbody tr:nth-child(even) {
+            background-color: #fafffe;
+        }
+
+        .data-section tbody tr:hover {
+            background-color: #e6f7f5;
+        }
+
+        .data-section .status-success {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .data-section .status-warning {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .data-section .status-danger {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .admin-dashboard {
+                padding: 20px 15px;
+                margin: 20px auto;
+            }
+            
+            .welcome-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .data-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .data-section th,
+            .data-section td {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+
+            /* Enable horizontal scrolling for tables on small screens */
+            .data-section table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #2ecc71;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #2ecc71;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="login.html" id="login-link-nav" style="display: none;"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" style="display: none;"><i class="fas fa-user-plus"></i> Daftar</a>
+            <a href="pasien.html" id="area-pasien-link" style="display: none;"><i class="fas fa-user-injured"></i> Area Pasien</a>
+            <a href="dokter.html" id="area-dokter-link" style="display: none;"><i class="fas fa-user-md"></i> Area Dokter</a>
+            <a href="resepsionis.html" id="area-resepsionis-link" style="display: none;"><i class="fas fa-notes-medical"></i> Area Resepsionis</a>
+            <a href="admin.html" id="area-admin-link" style="display: none;"><i class="fas fa-user-shield"></i> Area Admin</a>
+            <a href="#" id="logout-link-nav" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <div class="admin-dashboard">
+        <section class="welcome-section">
+            <h2 id="welcome-message">Selamat Datang, Admin!</h2>
+            <p>Ini adalah halaman utama untuk mengelola data klinik.</p>
+        </section>
+
+        <div class="dashboard-sections">
+            <section class="data-section">
+                <h3><i class="fas fa-calendar-alt"></i> Data Konsultasi</h3>
+                <div id="consultation-data-container">
+                    <p id="empty-consultation-message" class="empty-message">Tidak ada data konsultasi.</p>
+                    <table id="consultation-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tanggal</th>
+                                <th>Waktu</th>
+                                <th>Nama Pasien</th>
+                                <th>Nama Dokter</th>
+                                <th>Keluhan</th>
+                                <th>Diagnosa</th>
+                                <th>Resep</th>
+                                <th>Status Pembayaran</th>
+                                <th>Status Konsultasi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultation-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <h3><i class="fas fa-user-md"></i> Data Dokter</h3>
+                <div id="doctor-data-container">
+                    <p id="empty-doctor-message" class="empty-message">Tidak ada data dokter.</p>
+                    <table id="doctor-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Nama</th>
+                                <th>Spesialisasi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctor-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <h3><i class="fas fa-user-injured"></i> Data Pasien</h3>
+                <div id="patient-data-container">
+                    <p id="empty-patient-message" class="empty-message">Tidak ada data pasien.</p>
+                    <table id="patient-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patient-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <h3><i class="fas fa-notes-medical"></i> Data Resepsionis</h3>
+                <div id="resepsionis-data-container">
+                    <p id="empty-resepsionis-message" class="empty-message">Tidak ada data resepsionis.</p>
+                    <table id="resepsionis-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Nama</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resepsionis-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li id="footer-login-link"><a href="login.html">Login</a></li>
+                <li id="footer-register-link"><a href="register.html">Daftar</a></li>
+                <li id="footer-area-pasien-link" style="display: none;"><a href="pasien.html">Area Pasien</a></li>
+                <li id="footer-area-dokter-link" style="display: none;"><a href="dokter.html">Area Dokter</a></li>
+                <li id="footer-area-resepsionis-link" style="display: none;"><a href="resepsionis.html">Area Resepsionis</a></li>
+                <li id="footer-area-admin-link" style="display: none;"><a href="admin.html">Area Admin</a></li>
+                <li id="footer-logout-link" style="display: none;"><a href="#">Logout</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Memeriksa dukungan Local Storage
+            if (typeof(Storage) === "undefined") {
+                alert('Browser Anda tidak mendukung fitur penyimpanan lokal. Beberapa fitur mungkin tidak berfungsi.');
+                return;
+            }
+
+            // --- Navigasi dan Otentikasi ---
+            const loginLinkNav = document.getElementById('login-link-nav');
+            const logoutLinkNav = document.getElementById('logout-link-nav');
+            const areaPasienLinkNav = document.getElementById('area-pasien-link');
+            const areaDokterLinkNav = document.getElementById('area-dokter-link');
+            const areaResepsionisLinkNav = document.getElementById('area-resepsionis-link');
+            const areaAdminLinkNav = document.getElementById('area-admin-link'); // Tambah
+            
+            const footerLoginLink = document.getElementById('footer-login-link');
+            const footerRegisterLink = document.getElementById('footer-register-link');
+            const footerAreaPasienLink = document.getElementById('footer-area-pasien-link');
+            const footerAreaDokterLink = document.getElementById('footer-area-dokter-link');
+            const footerAreaResepsionisLink = document.getElementById('footer-area-resepsionis-link');
+            const footerAreaAdminLink = document.getElementById('footer-area-admin-link'); // Tambah
+            const footerLogoutLink = document.getElementById('footer-logout-link');
+
+            let loggedUser;
+            try {
+                loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                // Pengalihan jika pengguna tidak login atau bukan admin
+                if (!loggedUser || loggedUser.role !== 'admin') {
+                    alert('Anda harus login sebagai Admin untuk mengakses halaman ini.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+            } catch (e) {
+                console.error("Error parsing user data:", e);
+                alert('Terjadi kesalahan saat memuat data pengguna.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const welcomeMessage = document.getElementById('welcome-message');
+            if (welcomeMessage) {
+                welcomeMessage.textContent = `Selamat Datang, ${loggedUser.nama}!`;
+            }
+
+            // Fungsi untuk memperbarui tampilan tautan navigasi berdasarkan status login
+            function updateNavLinks() {
+                if (loggedUser) {
+                    if (loginLinkNav) loginLinkNav.style.display = 'none';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'flex';
+                    if (footerLoginLink) footerLoginLink.style.display = 'none';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'list-item';
+
+                    const registerLinkNav = document.querySelector('a[href="register.html"]');
+                    if (registerLinkNav) registerLinkNav.style.display = 'none';
+                    if (footerRegisterLink) footerRegisterLink.style.display = 'none';
+                    
+                    if (areaPasienLinkNav) areaPasienLinkNav.style.display = (loggedUser.role === 'pasien' ? 'flex' : 'none');
+                    if (footerAreaPasienLink) footerAreaPasienLink.style.display = (loggedUser.role === 'pasien' ? 'list-item' : 'none');
+
+                    if (areaDokterLinkNav) areaDokterLinkNav.style.display = (loggedUser.role === 'dokter' ? 'flex' : 'none');
+                    if (footerAreaDokterLink) footerAreaDokterLink.style.display = (loggedUser.role === 'dokter' ? 'list-item' : 'none');
+
+                    if (areaResepsionisLinkNav) areaResepsionisLinkNav.style.display = (loggedUser.role === 'resepsionis' ? 'flex' : 'none');
+                    if (footerAreaResepsionisLink) footerAreaResepsionisLink.style.display = (loggedUser.role === 'resepsionis' ? 'list-item' : 'none');
+
+                    if (areaAdminLinkNav) areaAdminLinkNav.style.display = (loggedUser.role === 'admin' ? 'flex' : 'none');
+                    if (footerAreaAdminLink) footerAreaAdminLink.style.display = (loggedUser.role === 'admin' ? 'list-item' : 'none');
+                } else {
+                    if (loginLinkNav) loginLinkNav.style.display = 'flex';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'none';
+                    if (areaPasienLinkNav) areaPasienLinkNav.style.display = 'none';
+                    if (areaDokterLinkNav) areaDokterLinkNav.style.display = 'none';
+                    if (areaResepsionisLinkNav) areaResepsionisLinkNav.style.display = 'none';
+                    if (areaAdminLinkNav) areaAdminLinkNav.style.display = 'none'; // Sembunyikan untuk non-login
+                    if (footerLoginLink) footerLoginLink.style.display = 'list-item';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'none';
+                    if (footerAreaPasienLink) footerAreaPasienLink.style.display = 'none';
+                    if (footerAreaDokterLink) footerAreaDokterLink.style.display = 'none';
+                    if (footerAreaResepsionisLink) footerAreaResepsionisLink.style.display = 'none';
+                    if (footerAreaAdminLink) footerAreaAdminLink.style.display = 'none'; // Sembunyikan untuk non-login
+                }
+            }
+            updateNavLinks();
+
+            // Event listener untuk logout
+            if (logoutLinkNav) {
+                logoutLinkNav.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+            if (footerLogoutLink) {
+                footerLogoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // --- Fungsionalitas Admin Dashboard ---
+
+            // Fungsi untuk mendapatkan semua data pengguna (pasien, dokter, resepsionis, admin)
+            function getAllUsers() {
+                try {
+                    return JSON.parse(localStorage.getItem('users')) || [];
+                } catch (e) {
+                    console.error("Error loading users data:", e);
+                    return [];
+                }
+            }
+
+            // Fungsi untuk mendapatkan semua data konsultasi
+            function getAllConsultations() {
+                try {
+                    return JSON.parse(localStorage.getItem('consultationHistory')) || [];
+                } catch (e) {
+                    console.error("Error loading consultation history:", e);
+                    return [];
+                }
+            }
+
+            // --- Render Data Konsultasi ---
+            const consultationTableBody = document.getElementById('consultation-table-body');
+            const emptyConsultationMessage = document.getElementById('empty-consultation-message');
+            const consultationTable = document.getElementById('consultation-table');
+
+            function renderConsultations() {
+                const consultations = getAllConsultations();
+
+                if (consultations.length === 0) {
+                    emptyConsultationMessage.style.display = 'block';
+                    consultationTable.style.display = 'none';
+                    return;
+                }
+
+                emptyConsultationMessage.style.display = 'none';
+                consultationTable.style.display = 'table';
+                consultationTableBody.innerHTML = ''; // Bersihkan tabel
+
+                // Urutkan berdasarkan tanggal (terbaru ke terlama)
+                consultations.sort((a, b) => {
+                    const dateA = new Date(a.date.split('/').reverse().join('-') + 'T' + a.time);
+                    const dateB = new Date(b.date.split('/').reverse().join('-') + 'T' + b.time);
+                    return dateB - dateA;
+                });
+
+                consultations.forEach(item => {
+                    const row = consultationTableBody.insertRow();
+                    row.insertCell().textContent = item.id;
+                    row.insertCell().textContent = item.date;
+                    row.insertCell().textContent = item.time;
+                    row.insertCell().textContent = item.patientName;
+                    row.insertCell().textContent = item.doctorName;
+                    
+                    const complaintCell = row.insertCell();
+                    const shortenedComplaint = item.complaint.length > 50 
+                        ? item.complaint.substring(0, 50) + '...' 
+                        : item.complaint;
+                    complaintCell.textContent = shortenedComplaint;
+                    complaintCell.title = item.complaint; // Tooltip untuk keluhan lengkap
+
+                    // Data rekam medis (diagnosa, resep)
+                    const diagnosis = item.medicalRecord ? item.medicalRecord.diagnosis : 'Belum diisi';
+                    const prescription = item.medicalRecord ? item.medicalRecord.prescription : 'Belum diisi';
+                    
+                    const shortenedDiagnosis = diagnosis.length > 50 
+                        ? diagnosis.substring(0, 50) + '...' 
+                        : diagnosis;
+                    const shortenedPrescription = prescription.length > 50 
+                        ? prescription.substring(0, 50) + '...' 
+                        : prescription;
+
+                    const diagnosisCell = row.insertCell();
+                    diagnosisCell.textContent = shortenedDiagnosis;
+                    diagnosisCell.title = diagnosis; // Tooltip untuk diagnosa lengkap
+
+                    const prescriptionCell = row.insertCell();
+                    prescriptionCell.textContent = shortenedPrescription;
+                    prescriptionCell.title = prescription; // Tooltip untuk resep lengkap
+
+                    const paymentStatusCell = row.insertCell();
+                    paymentStatusCell.textContent = item.paymentStatus;
+                    paymentStatusCell.className = `status-${item.paymentStatus === 'Berhasil' ? 'success' : (item.paymentStatus === 'Gagal' ? 'danger' : 'warning')}`;
+
+                    const consultationStatusCell = row.insertCell();
+                    consultationStatusCell.textContent = item.consultationStatus;
+                    consultationStatusCell.className = `status-${item.consultationStatus === 'Selesai' ? 'success' : (item.consultationStatus === 'Dibatalkan' ? 'danger' : 'warning')}`;
+                });
+            }
+
+            // --- Render Data Dokter ---
+            const doctorTableBody = document.getElementById('doctor-table-body');
+            const emptyDoctorMessage = document.getElementById('empty-doctor-message');
+            const doctorTable = document.getElementById('doctor-table');
+
+            function renderDoctors() {
+                const users = getAllUsers();
+                const doctors = users.filter(user => user.role === 'dokter');
+
+                if (doctors.length === 0) {
+                    emptyDoctorMessage.style.display = 'block';
+                    doctorTable.style.display = 'none';
+                    return;
+                }
+
+                emptyDoctorMessage.style.display = 'none';
+                doctorTable.style.display = 'table';
+                doctorTableBody.innerHTML = '';
+
+                doctors.forEach(doctor => {
+                    const row = doctorTableBody.insertRow();
+                    row.insertCell().textContent = doctor.username;
+                    row.insertCell().textContent = doctor.nama;
+                    row.insertCell().textContent = doctor.spesialis || '-'; // Tambahkan spesialisasi
+                });
+            }
+
+            // --- Render Data Pasien ---
+            const patientTableBody = document.getElementById('patient-table-body');
+            const emptyPatientMessage = document.getElementById('empty-patient-message');
+            const patientTable = document.getElementById('patient-table');
+
+            function renderPatients() {
+                const users = getAllUsers();
+                const patients = users.filter(user => user.role === 'pasien');
+
+                if (patients.length === 0) {
+                    emptyPatientMessage.style.display = 'block';
+                    patientTable.style.display = 'none';
+                    return;
+                }
+
+                emptyPatientMessage.style.display = 'none';
+                patientTable.style.display = 'table';
+                patientTableBody.innerHTML = '';
+
+                patients.forEach(patient => {
+                    const row = patientTableBody.insertRow();
+                    row.insertCell().textContent = patient.username;
+                    row.insertCell().textContent = patient.nama;
+                });
+            }
+
+            // --- Render Data Resepsionis ---
+            const resepsionisTableBody = document.getElementById('resepsionis-table-body');
+            const emptyResepsionisMessage = document.getElementById('empty-resepsionis-message');
+            const resepsionisTable = document.getElementById('resepsionis-table');
+
+            function renderResepsionis() {
+                const users = getAllUsers();
+                const resepsionis = users.filter(user => user.role === 'resepsionis');
+
+                if (resepsionis.length === 0) {
+                    emptyResepsionisMessage.style.display = 'block';
+                    resepsionisTable.style.display = 'none';
+                    return;
+                }
+
+                emptyResepsionisMessage.style.display = 'none';
+                resepsionisTable.style.display = 'table';
+                resepsionisTableBody.innerHTML = '';
+
+                resepsionis.forEach(r => {
+                    const row = resepsionisTableBody.insertRow();
+                    row.insertCell().textContent = r.username;
+                    row.insertCell().textContent = r.nama;
+                });
+            }
+
+            // Panggil semua fungsi render saat halaman dimuat
+            renderConsultations();
+            renderDoctors();
+            renderPatients();
+            renderResepsionis();
+        });
+    </script>
+</body>
+</html>

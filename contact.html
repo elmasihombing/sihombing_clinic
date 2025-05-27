@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak Kami - Sihombing Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        /* Global Styles - Tetap sama dengan about_us.html */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2b13e4, #0ca3da);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #3630f5;
+            transform: translateY(-2px);
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e69f5;
+            font-size: 2rem;
+        }
+
+        /* Contact Section Specific Styles */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 30px;
+        }
+
+        .contact-info, .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3, .contact-form h3 {
+            color: #07080e;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .contact-info p i {
+            color: #0e0e0d;
+            font-size: 1.2rem;
+            margin-top: 3px; /* Adjust icon alignment */
+        }
+
+        .contact-info iframe {
+            width: 100%;
+            height: 300px;
+            border: 0;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            border-color: #2826a6;
+            box-shadow: 0 0 8px rgba(38, 166, 154, 0.2);
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-form button {
+            background-color: #115ce8;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #554af1;
+            transform: translateY(-2px);
+        }
+
+        /* Footer Styles - Tetap sama dengan about_us.html */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #0780f1;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #0881c6;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #1899e9;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design - Tetap sama dengan about_us.html */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-info, .contact-form {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+          
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="login.html" id="login-link-nav"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a>
+            <a href="pasien.html" id="area-pasien-link" style="display: none;"><i class="fas fa-user-injured"></i> Area Pasien</a>
+            <a href="#" id="logout-link-nav" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <h2 class="section-title">Hubungi Kami</h2>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3><i class="fas fa-map-marker-alt"></i> Informasi Kontak</h3>
+                    <p><i class="fas fa-phone-alt"></i> <strong>Telepon:</strong> +62 838 3074 8293</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> SihombingClinic@gmail.com</p>
+                    <p><i class="fas fa-location-dot"></i> <strong>Alamat:</strong> Jl. Dr. Mansyur, Gg. Pelita IV, Padang Bulan Selayang I, Kec. Medan Selayang, Kota Medan, Sumatera Utara 20131</p>
+                    <p><i class="fas fa-clock"></i> <strong>Jam Operasional:</strong></p>
+                    <ul>
+                        <li>Senin - Jumat: 08:00 - 17:00 WIB</li>
+                        <li>Sabtu: 08:00 - 13:00 WIB</li>
+                        <li>Minggu: Tutup</li>
+                    </ul>
+
+                    <h3><i class="fas fa-compass"></i> Lokasi Kami</h3>
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.862497645163!2d98.6508493741893!3d3.5683935510656223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30312fe2944b360f%3A0xc4b7d5f0b8d5a1c!2sSihombing%20Clinic!5e0!3m2!1sen!2sid!4v1684988083864!5m2!1sen!2sid" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <div class="contact-form">
+                    <h3><i class="fas fa-paper-plane"></i> Kirim Pesan kepada Kami</h3>
+                    <form action="#" method="POST">
+                        <label for="name">Nama Lengkap:</label>
+                        <input type="text" id="name" name="name" required>
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="subject">Subjek:</label>
+                        <input type="text" id="subject" name="subject" required>
+                        
+                        <label for="message">Pesan Anda:</label>
+                        <textarea id="message" name="message" required></textarea>
+                        
+                        <button type="submit">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk mengecek status login dan menyesuaikan navigasi
+            function checkLoginStatus() {
+                const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                const loginLink = document.getElementById('login-link-nav');
+                const logoutLink = document.getElementById('logout-link-nav');
+                const areaPasienLink = document.getElementById('area-pasien-link');
+
+                if (loggedUser) {
+                    loginLink.style.display = 'none';
+                    logoutLink.style.display = 'flex';
+                    
+                    if (loggedUser.role === 'pasien') {
+                        areaPasienLink.style.display = 'flex';
+                    } else {
+                        areaPasienLink.style.display = 'none';
+                    }
+                } else {
+                    loginLink.style.display = 'flex';
+                    logoutLink.style.display = 'none';
+                    areaPasienLink.style.display = 'none';
+                }
+            }
+
+            // Panggil fungsi saat halaman dimuat
+            checkLoginStatus();
+
+            // Tambahkan event listener untuk logout
+            const logoutLink = document.getElementById('logout-link-nav');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

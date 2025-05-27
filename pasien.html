@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Area Pasien - Sihombing Clinic</title> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* Gaya CSS yang sudah ada */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #26a69a, #2ecc71);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #26a69a;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            margin: 0 auto;
+            flex-grow: 1;
+        }
+
+        .pasien-dashboard {
+            background: white;
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+            color: #004d40;
+            width: 100%;
+        }
+
+        .pasien-dashboard h2 {
+            text-align: center;
+            color: #26a69a;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .pasien-dashboard h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #2ecc71;
+        }
+
+        #welcome-message {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            color: #00796b;
+            font-weight: 600;
+        }
+
+        .consultation-section, .history-section {
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #f8fafc;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        .consultation-section h3, .history-section h3 {
+            color: #00796b;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #26a69a;
+            box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.2);
+            outline: none;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button[type="submit"] {
+            background-color: #26a69a;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 25px auto 0;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #208e82;
+            transform: translateY(-2px);
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: #e6ffe6;
+            color: #28a745;
+            border: 1px solid #28a745;
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: #ffe6e6;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            display: block;
+        }
+
+        #consultation-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        #consultation-history-table th,
+        #consultation-history-table td {
+            border: 1px solid #eee;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        #consultation-history-table th {
+            background-color: #e0f2f1;
+            color: #00796b;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        #consultation-history-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #consultation-history-table tbody tr:hover {
+            background-color: #eaf7f6;
+        }
+
+        .status-success {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .status-warning {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .status-danger {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        #empty-history-message {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .medical-record-display {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .medical-record-display p {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #2ecc71;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #2ecc71;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .pasien-dashboard {
+                padding: 25px;
+            }
+
+            .consultation-section, .history-section {
+                padding: 20px;
+            }
+
+            #consultation-history-table th,
+            #consultation-history-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="pasien.html" id="area-pasien-link" style="display: none;"><i class="fas fa-user-circle"></i> Area Pasien</a>
+            <a href="login.html" id="login-link"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html" id="register-link"><i class="fas fa-user-plus"></i> Daftar</a>
+            <a href="#" id="logout-link" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <section class="pasien-dashboard">
+            <h2>Dashboard Pasien</h2>
+            <p id="welcome-message">Selamat Datang!</p>
+
+            <div class="consultation-section">
+                <h3>Ajukan Konsultasi Baru</h3>
+                <form id="consultation-form">
+                    <div class="form-group">
+                        <label for="doctor-select">Pilih Dokter Spesialis:</label>
+                        <select id="doctor-select" name="doctor" required>
+                            <option value="">-- Pilih Dokter --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="complaint">Keluhan Anda:</label>
+                        <textarea id="complaint" name="complaint" rows="5" placeholder="Jelaskan keluhan Anda secara detail..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Metode Pembayaran:</label>
+                        <select id="payment-method" name="payment-method" required>
+                            <option value="">-- Pilih Metode Pembayaran --</option>
+                            <option value="transfer_bank">Transfer Bank</option>
+                            <option value="ewallet">E-Wallet</option>
+                            <option value="kartu_kredit">Kartu Kredit</option>
+                        </select>
+                    </div>
+                    <button type="submit">Ajukan Konsultasi</button>
+                    <p id="form-message" class="form-message"></p>
+                </form>
+            </div>
+
+            <div class="history-section">
+                <h3>Riwayat Konsultasi Anda</h3>
+                <table id="consultation-history-table">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Dokter</th>
+                            <th>Spesialisasi</th>
+                            <th>Keluhan</th>
+                            <th>Status Pembayaran</th>
+                            <th>Status Konsultasi</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                    </tbody>
+                </table>
+                <p id="empty-history-message">Belum ada riwayat konsultasi.</p>
+            </div>
+
+            <div class="medical-record-section">
+                <h3>Lihat Rekam Medis</h3>
+                <form id="view-medical-record-form">
+                    <div class="form-group">
+                        <label for="consultation-history-select">Pilih Konsultasi:</label>
+                        <select id="consultation-history-select" name="consultation" required>
+                            <option value="">-- Pilih Konsultasi dari Riwayat --</option>
+                        </select>
+                    </div>
+                    <button type="submit">Tampilkan Rekam Medis</button>
+                    <p id="medical-record-message" class="form-message"></p>
+                </form>
+
+                <div id="medical-record-display" class="medical-record-display" style="display: none;">
+                    <h4>Detail Rekam Medis</h4>
+                    <p><strong>Tanggal Konsultasi:</strong> <span id="record-date"></span></p>
+                    <p><strong>Dokter:</strong> <span id="record-doctor-name"></span> (<span id="record-doctor-specialty"></span>)</p>
+                    <p><strong>Keluhan Awal:</strong> <span id="record-complaint"></span></p>
+                    <p><strong>Diagnosa:</strong> <span id="record-diagnosis"></span></p>
+                    <p><strong>Resep Obat:</strong> <span id="record-prescription"></span></p>
+                    <p><strong>Catatan Dokter:</strong> <span id="record-notes"></span></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="login.html" id="footer-login-link">Login</a></li> 
+                <li><a href="register.html" id="footer-register-link">Daftar</a></li>
+                <li><a href="pasien.html" id="footer-area-pasien-link" style="display: none;">Area Pasien</a></li>
+                <li><a href="#" id="footer-logout-link" style="display: none;">Logout</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if localStorage is available
+            if (typeof(Storage) === "undefined") {
+                alert('Browser Anda tidak mendukung fitur penyimpanan lokal. Beberapa fitur mungkin tidak berfungsi.');
+                return;
+            }
+
+            // DOM Elements for Navigation
+            const loginLinkNav = document.getElementById('login-link'); 
+            const logoutLinkNav = document.getElementById('logout-link');
+            const areaPasienLinkNav = document.getElementById('area-pasien-link');
+            const registerLinkNav = document.getElementById('register-link');
+            const footerLoginLink = document.getElementById('footer-login-link');
+            const footerRegisterLink = document.getElementById('footer-register-link');
+            const footerAreaPasienLink = document.getElementById('footer-area-pasien-link');
+            const footerLogoutLink = document.getElementById('footer-logout-link');
+
+            // Get logged user data with error handling
+            let loggedUser;
+            try {
+                loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                
+                // Redirect if not logged in or not a patient
+                if (!loggedUser || loggedUser.role !== 'pasien') {
+                    alert('Anda harus login sebagai pasien untuk mengakses halaman ini.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+            } catch (e) {
+                console.error("Error parsing user data:", e);
+                alert('Terjadi kesalahan saat memuat data pengguna.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // DOM Elements for Pasien Page Content
+            const welcomeMessage = document.getElementById('welcome-message');
+            const doctorSelect = document.getElementById('doctor-select');
+            const consultationForm = document.getElementById('consultation-form');
+            const formMessage = document.getElementById('form-message');
+            const historyTableBody = document.getElementById('history-table-body');
+            const emptyHistoryMessage = document.getElementById('empty-history-message');
+            const consultationHistorySelect = document.getElementById('consultation-history-select');
+            const viewMedicalRecordForm = document.getElementById('view-medical-record-form');
+            const medicalRecordDisplay = document.getElementById('medical-record-display');
+            const medicalRecordMessage = document.getElementById('medical-record-message');
+            const recordDate = document.getElementById('record-date');
+            const recordDoctorName = document.getElementById('record-doctor-name');
+            const recordDoctorSpecialty = document.getElementById('record-doctor-specialty');
+            const recordComplaint = document.getElementById('record-complaint');
+            const recordDiagnosis = document.getElementById('record-diagnosis');
+            const recordPrescription = document.getElementById('record-prescription');
+            const recordNotes = document.getElementById('record-notes');
+            
+            // Update UI based on login status and user name
+            welcomeMessage.textContent = `Selamat Datang, ${loggedUser.nama || loggedUser.username}!`;
+
+            // Update navigation links based on login status
+            function updateNavLinks() {
+                if (loggedUser) {
+                    // Header Nav Links
+                    if (loginLinkNav) loginLinkNav.style.display = 'none';
+                    if (registerLinkNav) registerLinkNav.style.display = 'none';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'flex';
+                    if (areaPasienLinkNav) {
+                        areaPasienLinkNav.style.display = loggedUser.role === 'pasien' ? 'flex' : 'none';
+                    }
+
+                    // Footer Nav Links
+                    if (footerLoginLink) footerLoginLink.style.display = 'none';
+                    if (footerRegisterLink) footerRegisterLink.style.display = 'none';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'list-item';
+                    if (footerAreaPasienLink) {
+                        footerAreaPasienLink.style.display = loggedUser.role === 'pasien' ? 'list-item' : 'none';
+                    }
+                } else {
+                    // Header Nav Links
+                    if (loginLinkNav) loginLinkNav.style.display = 'flex';
+                    if (registerLinkNav) registerLinkNav.style.display = 'flex';
+                    if (logoutLinkNav) logoutLinkNav.style.display = 'none';
+                    if (areaPasienLinkNav) areaPasienLinkNav.style.display = 'none';
+
+                    // Footer Nav Links
+                    if (footerLoginLink) footerLoginLink.style.display = 'list-item';
+                    if (footerRegisterLink) footerRegisterLink.style.display = 'list-item';
+                    if (footerLogoutLink) footerLogoutLink.style.display = 'none';
+                    if (footerAreaPasienLink) footerAreaPasienLink.style.display = 'none';
+                }
+            }
+            
+            updateNavLinks();
+
+            // Logout functionality
+            if (logoutLinkNav) {
+                logoutLinkNav.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            if (footerLogoutLink) {
+                footerLogoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser');
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html';
+                });
+            }
+
+            // Load doctors data with sample data if empty
+            function getDoctors() {
+                try {
+                    let users = JSON.parse(localStorage.getItem('users')) || [];
+                    
+                    // If no users, create sample doctors
+                    if (users.length === 0) {
+                        const sampleDoctors = [
+                            {
+                                username: "dokter1",
+                                nama: "Dr. Elma Sihombing",
+                                role: "dokter",
+                                spesialis: "Spesialis Penyakit Dalam",
+                                password: "dokter123"
+                            },
+                            {
+                                username: "dokter2",
+                                nama: "Dr. Reva Mariani BR Sinaga",
+                                role: "dokter",
+                                spesialis: "Spesialis Anak",
+                                password: "dokter123"
+                            },
+                            {
+                                username: "dokter3",
+                                nama: "Dr. Deby Irmawati Sitompul",
+                                role: "dokter",
+                                spesialis: "Spesialis Mata",
+                                password: "dokter123"
+                            },
+                            {
+                                username: "dokter4",
+                                nama: "Dr. Chelsea Sihombing",
+                                role: "dokter",
+                                spesialis: "Spesialis Kandungan",
+                                password: "dokter123"
+                            }
+                        ];
+                        
+                        users = [...users, ...sampleDoctors];
+                        localStorage.setItem('users', JSON.stringify(users));
+                    }
+                    
+                    return users.filter(user => user.role === 'dokter' && user.spesialis);
+                } catch (e) {
+                    console.error("Error loading doctors:", e);
+                    return [];
+                }
+            }
+
+            // Populate doctor dropdown
+            function populateDoctorDropdown() {
+                const doctors = getDoctors();
+                doctorSelect.innerHTML = '<option value="">-- Pilih Dokter --</option>';
+                
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.username;
+                    option.textContent = `${doctor.nama} (${doctor.spesialis})`;
+                    doctorSelect.appendChild(option);
+                });
+            }
+
+            // Load consultation history
+            function getConsultationHistory() {
+                try {
+                    const history = JSON.parse(localStorage.getItem('consultationHistory')) || [];
+                    return history.filter(item => item.patientUsername === loggedUser.username);
+                } catch (e) {
+                    console.error("Error loading consultation history:", e);
+                    return [];
+                }
+            }
+
+            // Save consultation history
+            function saveConsultationHistory(history) {
+                try {
+                    localStorage.setItem('consultationHistory', JSON.stringify(history));
+                } catch (e) {
+                    console.error("Error saving consultation history:", e);
+                    alert('Gagal menyimpan riwayat konsultasi. Data mungkin tidak tersimpan.');
+                }
+            }
+
+            // Render consultation history
+            function renderConsultationHistory() {
+                const history = getConsultationHistory();
+                historyTableBody.innerHTML = '';
+                consultationHistorySelect.innerHTML = '<option value="">-- Pilih Konsultasi dari Riwayat --</option>';
+
+                if (history.length === 0) {
+                    emptyHistoryMessage.style.display = 'block';
+                    document.getElementById('consultation-history-table').style.display = 'none';
+                    return;
+                }
+
+                emptyHistoryMessage.style.display = 'none';
+                document.getElementById('consultation-history-table').style.display = 'table';
+                
+                // Sort by date (newest first)
+                history.sort((a, b) => {
+                    const dateA = new Date(a.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                });
+                
+                history.forEach(item => {
+                    const row = historyTableBody.insertRow();
+                    
+                    // Date cell
+                    const dateCell = row.insertCell();
+                    dateCell.textContent = item.date;
+                    
+                    // Doctor info cells
+                    row.insertCell().textContent = item.doctorName;
+                    row.insertCell().textContent = item.doctorSpecialty;
+                    
+                    // Complaint cell with truncation
+                    const complaintCell = row.insertCell();
+                    const shortenedComplaint = item.complaint.length > 50 
+                        ? item.complaint.substring(0, 50) + '...' 
+                        : item.complaint;
+                    complaintCell.textContent = shortenedComplaint;
+                    complaintCell.title = item.complaint;
+                    
+                    // Payment status with styling
+                    const paymentCell = row.insertCell();
+                    paymentCell.textContent = item.paymentStatus;
+                    if (item.paymentStatus === 'Berhasil') {
+                        paymentCell.className = 'status-success';
+                    } else {
+                        paymentCell.className = 'status-danger';
+                    }
+                    
+                    // Consultation status with styling
+                    const statusCell = row.insertCell();
+                    statusCell.textContent = item.consultationStatus || 'Menunggu';
+                    if (item.consultationStatus === 'Selesai') {
+                        statusCell.className = 'status-success';
+                    } else if (item.consultationStatus === 'Dibatalkan') {
+                        statusCell.className = 'status-danger';
+                    } else {
+                        statusCell.className = 'status-warning';
+                    }
+
+                    // Action cell for viewing medical record
+                    const actionCell = row.insertCell();
+                    if (item.consultationStatus === 'Selesai') {
+                        const viewButton = document.createElement('button');
+                        viewButton.textContent = 'Lihat Rekam Medis';
+                        viewButton.className = 'button-small';
+                        viewButton.onclick = () => showMedicalRecordForConsultation(item.id);
+                        actionCell.appendChild(viewButton);
+                    } else {
+                        actionCell.textContent = '-';
+                    }
+
+                    // Populate the medical record dropdown
+                    if (item.consultationStatus === 'Selesai') {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = `${item.date} - ${item.doctorName} (${item.complaint.substring(0, 30)}${item.complaint.length > 30 ? '...' : ''})`;
+                        consultationHistorySelect.appendChild(option);
+                    }
+                });
+            }
+
+            // Function to display medical record details
+            function showMedicalRecordForConsultation(consultationId) {
+                const history = getConsultationHistory();
+                const selectedConsultation = history.find(item => item.id === consultationId);
+
+                if (selectedConsultation && selectedConsultation.consultationStatus === 'Selesai') {
+                    medicalRecordDisplay.style.display = 'block';
+                    medicalRecordMessage.textContent = '';
+                    medicalRecordMessage.className = 'form-message';
+
+                    recordDate.textContent = selectedConsultation.date;
+                    recordDoctorName.textContent = selectedConsultation.doctorName;
+                    recordDoctorSpecialty.textContent = selectedConsultation.doctorSpecialty;
+                    recordComplaint.textContent = selectedConsultation.complaint;
+                    
+                    // Display medical record data or default messages
+                    recordDiagnosis.textContent = selectedConsultation.diagnosis || 'Belum ada diagnosa.';
+                    recordPrescription.textContent = selectedConsultation.prescription || 'Belum ada resep obat.';
+                    recordNotes.textContent = selectedConsultation.doctorNotes || 'Tidak ada catatan dokter.';
+
+                    // Scroll to the medical record section
+                    medicalRecordDisplay.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    medicalRecordDisplay.style.display = 'none';
+                    medicalRecordMessage.textContent = 'Rekam medis tidak tersedia atau konsultasi belum selesai.';
+                    medicalRecordMessage.className = 'form-message error';
+                }
+            }
+
+            // Handle submission of the "Lihat Rekam Medis" form
+            viewMedicalRecordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const selectedConsultationId = parseInt(consultationHistorySelect.value);
+
+                if (isNaN(selectedConsultationId)) {
+                    medicalRecordMessage.textContent = 'Harap pilih konsultasi yang valid.';
+                    medicalRecordMessage.className = 'form-message error';
+                    medicalRecordDisplay.style.display = 'none';
+                    return;
+                }
+                showMedicalRecordForConsultation(selectedConsultationId);
+            });
+
+            // Form submission handler for new consultation
+            consultationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset message
+                formMessage.textContent = '';
+                formMessage.className = 'form-message';
+                
+                // Get form values
+                const complaint = document.getElementById('complaint').value.trim();
+                const selectedDoctorUsername = doctorSelect.value;
+                const paymentMethod = document.getElementById('payment-method').value;
+                
+                // Validate form
+                if (!complaint || !selectedDoctorUsername || !paymentMethod) {
+                    formMessage.textContent = 'Harap lengkapi semua bidang!';
+                    formMessage.className = 'form-message error';
+                    return;
+                }
+                
+                if (complaint.length < 10) {
+                    formMessage.textContent = 'Deskripsi keluhan terlalu pendek (minimal 10 karakter).';
+                    formMessage.className = 'form-message error';
+                    return;
+                }
+                
+                // Find selected doctor
+                const doctors = getDoctors();
+                const selectedDoctor = doctors.find(doc => doc.username === selectedDoctorUsername);
+                
+                if (!selectedDoctor) {
+                    formMessage.textContent = 'Dokter yang dipilih tidak valid.';
+                    formMessage.className = 'form-message error';
+                    return;
+                }
+
+                // Simulate payment (90% success rate)
+                const paymentSuccessful = Math.random() > 0.1;
+                const paymentStatus = paymentSuccessful ? 'Berhasil' : 'Gagal';
+                
+                if (!paymentSuccessful) {
+                    formMessage.textContent = 'Pembayaran gagal. Silakan coba lagi atau gunakan metode pembayaran lain.';
+                    formMessage.className = 'form-message error';
+                    return;
+                }
+
+                // Create new consultation object
+                const newConsultation = {
+                    id: Date.now(),
+                    patientUsername: loggedUser.username,
+                    patientName: loggedUser.nama || loggedUser.username,
+                    date: new Date().toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }),
+                    doctorUsername: selectedDoctor.username,
+                    doctorName: selectedDoctor.nama,
+                    doctorSpecialty: selectedDoctor.spesialis,
+                    complaint: complaint,
+                    paymentMethod: paymentMethod,
+                    paymentStatus: paymentStatus,
+                    consultationStatus: paymentSuccessful ? 'Menunggu Konfirmasi Dokter' : 'Dibatalkan',
+                    diagnosis: '', 
+                    prescription: '',
+                    doctorNotes: ''
+                };
+                
+                // Save to history
+                const allConsultations = JSON.parse(localStorage.getItem('consultationHistory')) || [];
+                allConsultations.push(newConsultation);
+                saveConsultationHistory(allConsultations);
+                
+                // Show success message
+                formMessage.textContent = 'Konsultasi berhasil diajukan! Pembayaran berhasil.';
+                formMessage.className = 'form-message success';
+                
+                // Reset form and update history after delay
+                setTimeout(() => {
+                    consultationForm.reset();
+                    formMessage.textContent = '';
+                    formMessage.className = 'form-message';
+                    renderConsultationHistory();
+                }, 2000);
+            });
+
+            // Initialize page functions
+            populateDoctorDropdown();
+            renderConsultationHistory();
+        });
+    </script>
+</body>
+</html>

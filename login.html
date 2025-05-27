@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Sistem Klinik - Sihombing Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        /* Menggunakan kembali CSS dari file login.html untuk konsistensi */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        header {
+            background: linear-gradient(135deg, #30a3fb, #201adc);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1743d1;
+            transform: translateY(-2px);
+        }
+
+        .login-wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 420px;
+            color: #4d4800;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2664f3;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            color: #121113;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #b2dfdb;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: rgb(29, 109, 239) rgba(38, 166, 154, 0.2);
+        }
+
+        .role-selection {
+            margin: 20px 0;
+        }
+
+                .role-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px; /* hanya radius, tanpa warna */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* tambahkan nilai lengkap */
+            transition: background-color 0.2s;
+        }
+
+        .role-option:hover {
+            background-color: #e0f2f1; /* warna valid tanpa spasi putih di depannya */
+        }
+
+        .role-option input[type="radio"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: #1451eb;
+        }
+
+        .role-option label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 14px;
+            background: #2c46dd;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #2749f5;
+            transform: translateY(-2px);
+        }
+
+        .link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .link a {
+            color: #1189ec;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .link a:hover {
+            color: #146fd7;
+        }
+
+        .error {
+            color: #d32f2f;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+            width: 100%;
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            font-size: 15px;
+        }
+
+        footer div {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        footer h3 {
+            color: #0569f5;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        footer p, footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        footer a:hover {
+            color: #2e53cc;
+            text-decoration: underline;
+        }
+
+        footer .social-icons {
+            margin-top: 15px;
+        }
+
+        footer .social-icons a {
+            font-size: 20px;
+            margin-right: 15px;
+            color: #bdc3c7;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #004fc5;
+        }
+
+        footer .footer-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer .footer-nav li {
+            margin-bottom: 10px;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid #dcc605;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bdc3c7;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+            
+            .nav-menu a {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            label {
+                font-size: 15px;
+            }
+            
+            input[type="text"],
+            input[type="password"] {
+                font-size: 15px;
+                padding: 10px;
+            }
+            
+            button {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>
+            <img src="Img/logo.png" alt="Logo Sihombing Clinic" class="logo-img" />
+            Sihombing Clinic
+          </h1>
+
+        <nav class="nav-menu">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="about_us.html"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="login.html" id="login-link-nav"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="register.html"><i class="fas fa-user-plus"></i> Daftar</a>
+            <a href="pasien.html" id="area-pasien-link" style="display: none;"><i class="fas fa-user-injured"></i> Area Pasien</a>
+            <a href="#" id="logout-link-nav" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </nav>
+    </header>
+
+    <div class="login-wrapper">
+        <div class="container">
+            <h2>Login Sihombing Clinic</h2>
+            <form id="login-form">
+                <label for="username">Username</label>
+                <input type="text" id="username" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" required />
+
+                <div class="role-selection">
+                    <label>Jenis Akun Anda</label>
+                    <div class="role-option">
+                        <input type="radio" id="pasien" name="role" value="pasien" required>
+                        <label for="pasien">Pasien</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="dokter" name="role" value="dokter">
+                        <label for="dokter">Dokter</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="resepsionis" name="role" value="resepsionis">
+                        <label for="resepsionis">Resepsionis</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="admin" name="role" value="admin">
+                        <label for="admin">Admin</label>
+                    </div>
+                </div>
+
+                <button type="submit">Login</button>
+                <div class="error" id="error-msg"></div>
+            </form>
+            <div class="link">
+                Belum punya akun? <a href="register.html">Daftar di sini</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <h3>Sihombing Clinic</h3>
+            <p>Pusat konsultasi perawatan kesehatan terpercaya Anda.</p>
+            <div class="social-icons">
+                <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div>
+            <h3>Kontak Kami</h3>
+            <p><i class="fas fa-phone-alt"></i> Telepon: +62 838 3074 8293</p>
+            <p><i class="fas fa-envelope"></i> Email: SihombingClinic@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Dr. Mansyur, Gg. Pelita IV, Medan</p>
+        </div>
+        <div class="footer-nav">
+            <h3>Navigasi</h3>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="about_us.html">Tentang Kami</a></li>
+                <li><a href="contact.html">Kontak</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Daftar</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 Sihombing Clinic. Hak cipta dilindungi undang-undang.
+        </div>
+    </footer>
+
+    <script>
+        // Fungsi untuk mengambil data pengguna dari localStorage
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+
+        // Data pengguna default jika localStorage 'users' kosong
+        const defaultUsers = [
+            { username: 'pasien1', password: 'pasien123', role: 'pasien', nama: 'Budi Pasien' },
+            { username: 'dokterelma', password: 'elma123', role: 'dokter', nama: 'dr. Elma Sihombing, Sp.PD', spesialis: 'Penyakit Dalam' },
+            { username: 'dokterreva', password: 'reva123', role: 'dokter', nama: 'dr. Reva Sinaga, Sp.A', spesialis: 'Anak' },
+            { username: 'dokterdeby', password: 'deby123', role: 'dokter', nama: 'dr. Deby Sitompul, Sp.M', spesialis: 'Mata' },
+            { username: 'dokterchelsea', password: 'zega123', role: 'dokter', nama: 'dr. Chelsea Sihombing, Sp.OG', spesialis: 'Kandungan' },
+            { username: 'dokterrudi6', password: 'rudi123', role: 'dokter', nama: 'dr. Rudi Purba, Sp.THT', spesialis: 'THT' },
+            { username: 'resepsionisklinik6', password: 'resepsi123', role: 'resepsionis', nama: 'Reva' },
+            { username: 'adminklinik6', password: 'admin123', role: 'admin', nama: 'Admin Klinik' }
+        ];
+
+        // Inisialisasi data pengguna jika belum ada di localStorage
+        if (getUsers().length === 0) {
+            localStorage.setItem('users', JSON.stringify(defaultUsers));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            const errorDiv = document.getElementById('error-msg'); // Menggunakan ID yang sudah ada untuk pesan error
+
+            // Elemen navigasi yang mungkin perlu diubah display-nya
+            const loginLinkNav = document.getElementById('login-link-nav');
+            const logoutLinkNav = document.getElementById('logout-link-nav');
+            const areaPasienLink = document.getElementById('area-pasien-link');
+
+            // --- Fungsionalitas Tampilan Link Navigasi Berdasarkan Status Login ---
+            function updateNavLinks() {
+                const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+                if (loggedUser) {
+                    loginLinkNav.style.display = 'none';
+                    logoutLinkNav.style.display = 'flex'; // Gunakan flex agar ikon terlihat
+                    
+                    // Tampilkan tautan Area Pasien hanya jika pengguna adalah pasien
+                    if (loggedUser.role === 'pasien') {
+                        areaPasienLink.style.display = 'flex';
+                    } else {
+                        areaPasienLink.style.display = 'none';
+                    }
+                } else {
+                    loginLinkNav.style.display = 'flex';
+                    logoutLinkNav.style.display = 'none';
+                    areaPasienLink.style.display = 'none';
+                }
+            }
+
+            // Panggil fungsi untuk mengatur tautan navigasi saat halaman dimuat
+            updateNavLinks();
+
+            // --- Fungsionalitas Logout (jika ada elemen logout di halaman ini) ---
+            // Pastikan elemen logoutLinkNav ada sebelum menambahkan event listener
+            if (logoutLinkNav) {
+                logoutLinkNav.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedUser'); // Hapus status login
+                    alert('Anda telah berhasil logout.');
+                    window.location.href = 'login.html'; // Arahkan kembali ke halaman login
+                });
+            }
+
+            // --- Penanganan Pengajuan Formulir Login ---
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const role = document.querySelector('input[name="role"]:checked')?.value;
+                
+                errorDiv.textContent = ''; // Bersihkan pesan error sebelumnya
+
+                if (!username || !password || !role) {
+                    errorDiv.textContent = 'Semua field (username, password, dan jenis akun) wajib diisi.';
+                    return;
+                }
+
+                const users = getUsers();
+                const user = users.find(u => u.username === username && u.password === password && u.role === role);
+
+                if (user) {
+                    // Simpan status login ke localStorage
+                    localStorage.setItem('loggedUser', JSON.stringify(user));
+                    errorDiv.textContent = 'Login berhasil!';
+                    errorDiv.style.color = '#28a745'; // Warna hijau untuk sukses
+
+                    // Arahkan berdasarkan peran
+                    switch (user.role) {
+                        case 'pasien':
+                            window.location.href = 'pasien.html';
+                            break;
+                        case 'dokter':
+                            window.location.href = 'dokter.html';
+                            break;
+                        case 'resepsionis':
+                            window.location.href = 'resepsionis.html';
+                            break;
+                        case 'admin':
+                            window.location.href = 'admin.html';
+                            break;
+                        default:
+                            errorDiv.textContent = 'Jenis akun tidak valid.';
+                            // Hapus loggedUser jika peran tidak dikenali untuk keamanan
+                            localStorage.removeItem('loggedUser');
+                            break;
+                    }
+                } else {
+                    errorDiv.textContent = 'Username, password, atau jenis akun salah.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
